@@ -15,7 +15,7 @@ const (
 )
 
 // 이지토큰 데이터
-type easyJwtData struct {
+type EasyJwtData struct {
 	AlgorihmType     AlgorihmType
 	AccessTokenTime  int
 	RefreshTokenTime int
@@ -23,15 +23,9 @@ type easyJwtData struct {
 	SecretKey        string
 }
 
-// 토큰 데이터
-type tokenData struct {
-	Data interface{}
-	jwt.StandardClaims
-}
-
 // 이지데이터 스트럭쳐를 반환합니다
-func New() easyJwtData {
-	return easyJwtData{
+func New() EasyJwtData {
+	return EasyJwtData{
 		AlgorihmType:     HS256,
 		AccessTokenTime:  10,
 		RefreshTokenTime: 20,
@@ -44,13 +38,19 @@ type Token struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
+// 토큰 데이터
+type TokenData struct {
+	Data interface{} `json:"data"`
+	jwt.StandardClaims
+}
+
 // accessToken을 반환합니다
-func (t easyJwtData) GetAccessToken() string {
+func (t EasyJwtData) GetAccessToken() string {
 	if t.SecretKey == "" || t.Data == nil {
 		panic("클레임 및 보안키를 확인해주세요")
 	}
 
-	out := tokenData{
+	out := TokenData{
 		Data: t.Data,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Minute * time.Duration(t.AccessTokenTime)).Unix(),
@@ -65,11 +65,11 @@ func (t easyJwtData) GetAccessToken() string {
 }
 
 // refreshToken을 반환합니다
-func (t easyJwtData) GetRefreshToken() string {
+func (t EasyJwtData) GetRefreshToken() string {
 	if t.SecretKey == "" || t.Data == nil {
 		panic("클레임 및 보안키를 확인해주세요")
 	}
-	out := tokenData{
+	out := TokenData{
 		Data: t.Data,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add((time.Hour * 24) * time.Duration(t.RefreshTokenTime)).Unix(),
@@ -84,7 +84,7 @@ func (t easyJwtData) GetRefreshToken() string {
 }
 
 // accessToken 및 refreshToken을 반환 합니다
-func (t easyJwtData) GetAllToken() Token {
+func (t EasyJwtData) GetAllToken() Token {
 	var out Token
 
 	out.AccessToken = t.GetAccessToken()
