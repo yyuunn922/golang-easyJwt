@@ -22,6 +22,8 @@ func TestDefaultGetToken(t *testing.T) {
 	t.Log(temp.GetAccessToken())
 	t.Log(temp.GetRefreshToken())
 	t.Log(temp.GetAllToken())
+	t.Log(temp.GetAllToken().AccessToken)
+	t.Log(temp.GetAllToken().RefreshToken)
 
 	accessToken = temp.GetAccessToken()
 }
