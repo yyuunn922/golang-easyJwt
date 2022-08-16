@@ -34,8 +34,8 @@ func New() EasyJwtData {
 
 // 이지데이터 토큰 스트럭쳐
 type Token struct {
-	AccessToken  string `json:"access_token"`
-	RefreshToken string `json:"refresh_token"`
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
 }
 
 // 토큰 데이터
