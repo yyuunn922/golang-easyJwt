@@ -1,7 +1,3 @@
-# 환영합니다
-[golang-jwt](https://github.com/golang-jwt/jwt)를 활용해서, jwt를 손쉽게 프로젝트에서 사용할수있는 패키지입니다.
-
-# 사용법
 토큰생성 
 ```golang
 
